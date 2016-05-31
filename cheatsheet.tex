@@ -40,76 +40,88 @@
 
 \subsection*{Variables}
 
-Three kinds: universal, global, and local. Universal variables are shared btw.
-all sessions on the computer per user. Global variables are specific to the
-current fish session, but they are outside of any block scope. Local variables
-are specific to a particular block scope and are automatically erased.
+Three kinds: universal, global, and local.
+Universal variables are shared btw.\  all sessions on the computer per user.
+Global variables are specific to the current fish session, but they are outside of any block scope.
+Local variables are specific to a particular block scope and are automatically erased.
 
-Set a variable as universal with \texttt{-U}, as global with \texttt{-g}, or
-local with \texttt{-l}.
+Set a variable as universal with \texttt{-U}, as global with \texttt{-g}, or local with \texttt{-l}.
 
 Scoping rules are as follows:
 
 \begin{enumerate}
 
-\item If a variable is explicitly set to either universal, global or local, that
-setting will be honored. If a variable of the same name exists in a different
-scope, that variable will not be changed.
+\item If a variable is explicitly set to either universal, global or local, that setting will be honored.
+    If a variable of the same name exists in a different scope, that variable will not be changed.
 
-\item If a variable is not explicitly set to be either universal, global or
-local, but has been previously defined, the variable scope is not changed.
+\item If a variable is not explicitly set to be either universal, global or local, but has been previously defined, the variable scope is not changed.
 
-\item If a variable is not explicitly set to be either universal, global or
-local and has never before been defined, the variable will be local to the
-currently executing function. Note that this is different from using the -l or
-–local flag. If one of those flags is used, the variable will be local to the
-most inner currently executing block, while without these the variable will be
-local to the function. If no function is executing, the variable will be global.
+\item If a variable is not explicitly set to be either universal, global or local and has never before been defined, the variable will be local to the currently executing function.
+    Note that this is different from using the -l or –local flag.
+    If one of those flags is used, the variable will be local to the most inner currently executing block, while without these the variable will be local to the function.
+    If no function is executing, the variable will be global.
 
 \end{enumerate}
 
 \subsection*{Exporting Variables}
+
 Export a variable with \texttt{set -x}.
 
 \subsection*{Arrays}
+
 Store multiple strings in one variable with an array.
+
 \subsubsection*{Access an index}
+
 \texttt{echo \$PATH[3]}
+
 \subsubsection*{Iterate}
+
 \begin{verbatim}
 for i in $PATH
     echo $i in the path
 end
 \end{verbatim}
+
 \subsubsection*{Definition}
-Make an array called smurf containing "blue" and "small":\\
+
+Make an array called smurf containing ``blue'' and ``small'':\\
+
 \texttt{set smurf blue small}
+
 \subsubsection*{Delete an element}
+
 \texttt{set -e smurf[1]}
 
 \subsection*{Functions}
+
 Define a function like so:\\
+
 \begin{verbatim}
 function ll
-    ls -l \$argv
+    ls -l $argv
 end
 \end{verbatim}
+
 Access arguments using \texttt{\$argv}, call the function using \texttt{ll}.
 
 \subsection*{Jobs}
-When you execute a command, it starts a job. You can put a job in the background
-by adding the \texttt{\&} suffix. You can suspend a currently running job using
-\texttt{Ctrl-Z}. You can put the suspended job in the background with
-\texttt{bg}. Finally, you can list all running jobs with \texttt{jobs}.
+
+When you execute a command, it starts a job.
+You can put a job in the background by adding the \texttt{\&} suffix.
+You can suspend a currently running job using \texttt{Ctrl-Z}.
+You can put the suspended job in the background with \texttt{bg}.
+Finally, you can list all running jobs with \texttt{jobs}.
 
 \subsection*{Chaining Commands}
-Each command ends in either a newline or a semicolon. Chain commands using
-\texttt{command1; and command2} or \texttt{command1; or command2}. \texttt{and}
-and \texttt{or} check the previous command's exit status and act accordingly.
+
+Each command ends in either a newline or a semicolon.
+Chain commands using \texttt{command1; and command2} or \texttt{command1; or command2}.
+\texttt{and} and \texttt{or} check the previous command's exit status and act accordingly.
 
 \subsection*{Aliases}
-To define an alias, either make a function or use \texttt{alias NAME
-DEFINITION}, which actually just defines a function for you.
+
+To define an alias, either make a function or use \texttt{alias NAME DEFINITION}, which actually just defines a function for you.
 
 \switchcolumn
 
@@ -151,39 +163,43 @@ DEFINITION}, which actually just defines a function for you.
     \rowcolor{DarkBackground}
     \textbf{Type} & \textbf{Var Exp?} & \textbf{Esc. Char} \\
     none & Yes & All \\
-    " " & Yes & \textbackslash", \textbackslash\$, and \textbackslash\textbackslash \\
-    ' ' & No & \textbackslash', \textbackslash\textbackslash
+    \texttt{" "} & Yes & \textbackslash", \textbackslash\$, and \textbackslash\textbackslash \\
+    \texttt{' '} & No & \textbackslash', \textbackslash\textbackslash
 \end{tabularx}
 
 \subsection*{Command Expansion}
-Surround command in parentheses. If it returns multiple lines, they'll be joined
-with spaces.
+
+Surround command in parentheses.
+If it returns multiple lines, they'll be joined with spaces.
 
 \subsection*{Parameter Expansion}
-Fish supports more limited globbing than other shells; use \texttt{find} with
-command expansion for more complicated globs. Files beginning with . are ignored
-unless . is the first character in the glob.
+
+Fish supports more limited globbing than other shells; use \texttt{find} with command expansion for more complicated globs.
+Files beginning with \texttt{.} are ignored unless \texttt{.} is the first character in the glob.
 
 \rowcolors{1}{LightBackground}{white}
 \begin{tabularx}{\columnwidth}{X X X}
     \rowcolor{DarkBackground}
     \textbf{Char} & \textbf{Behavior} & \textbf{Exception} \\
-    ? & any single character & / \\
-    * & any string of characters & / \\
-    ** & any string of characters & none
+    \texttt{?} & any single character & / \\
+    \texttt{*} & any string of characters & / \\
+    \texttt{**} & any string of characters & none
 \end{tabularx}
 
 \subsection*{Brace Expansion}
+
 Same as in bash.\\
 \texttt{echo input.{c,h,txt}}\\
 \texttt{>> input.c input.h input.txt}
 
 \subsection*{Variable Expansion}
-A \$ followed by a string of characters is expanded to the value of the
-environmental variable with that name. Surround with braces to separate from
-text.
+
+A \$ followed by a string of characters is expanded to the value of the environmental variable with that name.
+Surround with braces to separate from text.
 
 \subsection*{Process Expansion}
+
+;
 \% followed by a string is expanded into a PID according these rules:
 
 \begin{enumerate}
@@ -196,7 +212,8 @@ text.
 \end{enumerate}
 
 \subsection*{Index Range Expansion}
-Select a range of values from an array using ..:\\
+
+Select a range of values from an array using \texttt{..}:\\
 \texttt{echo (seq 10)[2..5 1..3]}\\
 \texttt{>> 2 3 4 5 1 2 3}
 
