@@ -12,10 +12,10 @@
 %nicer fonts
 \usepackage[T1]{fontenc}
 \usepackage{inconsolata}
+%code
+\usepackage{listings}
 
 % Setup colors
-%\definecolor{DarkBackground}{HTML}{0F420F}
-%\definecolor{DarkBackgroundText}{HTML}{FFFFFF}
 \definecolor{DarkBackground}{HTML}{DDDDDD}
 \definecolor{LightBackground}{HTML}{D6DED6}
 
@@ -28,9 +28,9 @@
 \setlength{\headheight}{14.0pt}
 \lhead{\large Fish Shell Cheat Sheet}
 \chead{}
-\rhead{For Fish 2.1.1; updated \today}
+\rhead{For Fish 2.3.0; updated \today}
 \lfoot{}
-\cfoot{\textcopyright Copyright 2015 Michael Younkin}
+\cfoot{\textcopyright{} Copyright 2016 Michael Younkin}
 \rfoot{\thepage}
 
 \begin{document}
@@ -41,31 +41,37 @@
 \subsection*{Variables}
 
 Three kinds: universal, global, and local.
-Universal variables are shared btw.\  all sessions on the computer per user.
-Global variables are specific to the current fish session, but they are outside of any block scope.
-Local variables are specific to a particular block scope and are automatically erased.
+Universal variables are shared among all sessions with the same user on the same computer.
+Global variables are available in every scope in a single shell session.
+Local variables are block scoped.
 
 Set a variable as universal with \texttt{-U}, as global with \texttt{-g}, or local with \texttt{-l}.
 
-Scoping rules are as follows:
+\subsubsection*{Declaring Variables}
+
+\rowcolors{1}{LightBackground}{white}
+\begin{tabularx}{\columnwidth}{X X}
+    \rowcolor{DarkBackground}
+    \textbf{Command} & \textbf{Scope} \\
+    \texttt{set -U} & Universal \\
+    \texttt{set -g} & Global \\
+    \texttt{set -l} & Local
+\end{tabularx}
+
+\subsubsection*{Setting Variables}
 
 \begin{enumerate}
 
-\item If a variable is explicitly set to either universal, global or local, that setting will be honored.
-    If a variable of the same name exists in a different scope, that variable will not be changed.
-
-\item If a variable is not explicitly set to be either universal, global or local, but has been previously defined, the variable scope is not changed.
-
-\item If a variable is not explicitly set to be either universal, global or local and has never before been defined, the variable will be local to the currently executing function.
-    Note that this is different from using the -l or –local flag.
-    If one of those flags is used, the variable will be local to the most inner currently executing block, while without these the variable will be local to the function.
-    If no function is executing, the variable will be global.
-
+    \item If you specify the scope in the set command, that scope is honored.
+        If a variable with the same name exists in a different scope, that variable isn't changed.
+    \item If the scope is unspecified but a variable with the same name is already defined, that variable's scope is used.
+    \item If the scope is unspecified and has never been defined, the variable will be local to the current function (this is function scope, not block scope like -l).
+        If no function is executing, the variable will be global.
 \end{enumerate}
 
 \subsection*{Exporting Variables}
 
-Export a variable with \texttt{set -x}.
+Export a variable to the environment using \texttt{set -x}.
 
 \subsection*{Arrays}
 
@@ -123,7 +129,7 @@ Chain commands using \texttt{command1; and command2} or \texttt{command1; or com
 
 To define an alias, either make a function or use \texttt{alias NAME DEFINITION}, which actually just defines a function for you.
 
-\switchcolumn
+\switchcolumn{}
 
 \section*{Built-in Variables}
 
