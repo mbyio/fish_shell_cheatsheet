@@ -169,8 +169,8 @@ To define an alias, either make a function or use \texttt{alias NAME DEFINITION}
     \rowcolor{DarkBackground}
     \textbf{Type} & \textbf{Var Exp?} & \textbf{Esc. Char} \\
     none & Yes & All \\
-    \texttt{" "} & Yes & \textbackslash", \textbackslash\$, and \textbackslash\textbackslash \\
-    \texttt{' '} & No & \textbackslash', \textbackslash\textbackslash
+    \texttt{\" \"} & Yes & \textbackslash\", \textbackslash\$, and \textbackslash\textbackslash{} \\
+    \texttt{\' \'} & No & \textbackslash\', \textbackslash\textbackslash{}
 \end{tabularx}
 
 \subsection*{Command Expansion}
@@ -217,17 +217,17 @@ Surround with braces to separate from text.
 
 \subsection*{Index Range Expansion}
 
-Select a range of values from an array using \texttt{..}:\\
-\texttt{echo (seq 10)[2..5 1..3]}\\
+Select a range of values from an array using \texttt{\..}:\\
+\texttt{echo (seq 10)[2\..5 1\..3]}\\
 \texttt{>> 2 3 4 5 1 2 3}
 
-\switchcolumn
+\switchcolumn{}
 
 \section*{Editor Shortcuts}
 
 \begin{tabularx}{\columnwidth}{X >{\ttfamily}X}
     Complete current token & Tab \\
-    Accept autosuggestion & at EOL: End/Ctrl-E/Right/Ctrl-F \\
+    Accept autosuggestion & at EOL\: End/Ctrl-E/Right/Ctrl-F \\
     Move to BOL & Home/Ctrl-A \\
     Move to EOL & End/Ctrl-E \\
     Move characterwise & Left/Ctrl-B or Right/Ctrl-F \\
@@ -244,7 +244,7 @@ Select a range of values from an array using \texttt{..}:\\
     Move next work to killring & Alt-D \\
     Print description of CMD under cursor & Alt-W \\
     List contents of current directory or directory under cursor & Alt-L \\
-    Add '|less;' to end of job under cursor & Alt-P \\
+    Add \'|less;\' to end of job under cursor & Alt-P \\
     Capitalize current word & Alt-C \\
     Make current word uppercase & Alt-U
 \end{tabularx}
